@@ -1,20 +1,26 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import { useDentistStates } from "./utils/global.context";
 
 const Card = ({ name, username, id }) => {
+  const { favDispatch, apiState } = useDentistStates();
 
-  const addFav = ()=>{
-    // Aqui iria la logica para agregar la Card en el localStorage
-  }
+  const addFav = () => {
+    favDispatch({ type: "ADD_FAV", payload: apiState.dentistList });
+  };
 
   return (
-    <div className="card">
-        {/* En cada card deberan mostrar en name - username y el id */}
-
-        {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle */}
-
-        {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
-        <button onClick={addFav} className="favButton">Add fav</button>
+    <div className="card" key={id}>
+      <img className="doctor-img" src="./images/doctor.jpg" alt="DH-logo" />
+      <h3>{id}</h3>
+      <h2>{name}</h2>
+      <h3>{username}</h3>
+      <Link key={id} to={"/dentista/" + id}>
+        Details
+      </Link>
+      <button onClick={addFav} className="favButton">
+        🖤
+      </button>
     </div>
   );
 };
